@@ -53,14 +53,16 @@ export default function AuthPage() {
         }
     }
 
-    const handleClickSignIn = () => {
+    const handleClickSignIn = (e) => {
+        e.preventDefault()
         setActive(true)
         setEmail("")
         setPassword("")
         setError(null)
     }
 
-    const handleClickSignUp = () => {
+    const handleClickSignUp = (e) => {
+        e.preventDefault()
         setActive(false)
         setEmail("")
         setPassword("")
@@ -69,49 +71,40 @@ export default function AuthPage() {
     }
   return (
     <div style={{ backgroundColor: "#FAF3E9", height: "100dvh", overflow: "hidden"}}>
-        <Row className="flex-center">
-            <div className={active ? "overlay active" : "overlay"} style={{ width: "50%"}}>
+        <Row className="flex-center" style={{ minWidth:"300px"}}>
+            <Col className="p-0 d-inline-flex mt-3 mx-3">
                 {active ? (
-                    <div className="d-flex flex-column position-absolute top-50 start-0 translate-middle-y mx-5" style={{color: "#FAF3E9"}}>
-                    <h3>Welcome To</h3>
-                    <h1>BookMyHealth</h1>
-                    <p>Start booking now by signing in!</p>
-                    <Button className="mt-3 border-0 sign-up-button rounded-pill fw-bold" style={{ backgroundColor: "#FAF3E9", color: "#FF7F50"}} onClick={handleClickSignUp}>Sign In</Button>
-                </div>
+                    <Container className="px-5 pt-4" style={{ width: "100%"}}>
+                        <div style={{ fontSize: 32, fontWeight: "bold", color: "#FF7F50"}}>Sign Up</div>
+                        <Form onSubmit={handleSignUp}>
+                            <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
+                            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
+                            <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#FF7F50"}}>Sign Up</Button>
+                            <p className="mt-3"><a href="" onClick={handleClickSignUp}>Got an account? Click here to sign in!</a></p>
+                        </Form>
+                    </Container>
                 ) : (
-                    <div className="d-flex flex-column position-absolute top-50 start-0 translate-middle-y mx-5" style={{color: "#FAF3E9"}}>
-                        <h3>Welcome To</h3>
-                        <h1>BookMyHealth</h1>
-                        <p>First time user? Creat an account now!</p>
-                        <Button className="mt-3 border-0 sign-up-button rounded-pill fw-bold" style={{ backgroundColor: "#FAF3E9", color: "#FF7F50"}} onClick={handleClickSignIn}>Sign Up</Button>
-                    </div>
-                )}
-            </div>
-            <Col className="p-0">
-                <Container className="px-5 pt-4" style={{ width: "100%"}}>
-                    <div style={{ fontSize: 32, fontWeight: "bold", color: "#FF7F50"}}>Sign Up</div>
-                    <Form onSubmit={handleSignUp}>
-                        <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
-                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
-                        <Form.Control type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter phone number" required />
-                        <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#FF7F50"}}>Sign Up</Button>
-                    </Form>
-                    {error && (
-                        <p className="text-danger">{error}</p>
-                    )}
-                </Container>
-            </Col>
-            <Col className="p-0">
-                <Container className="px-5 pt-4" style={{ width: "100%"}}>
+                    <Container className="px-5 pt-4">
                         <div style={{ fontSize: 32, fontWeight: "bold", color: "#FF7F50"}}>Sign In</div>
                         <Form onSubmit={handleSignIn}>
                             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)}  className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
                             <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
                             <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#FF7F50"}}>Sign In</Button>
                         </Form>
-                        {error && (
-                            <p className="text-danger">{error}</p>
-                        )}
+                        <p className="mt-3"><a href="" onClick={handleClickSignIn}>First time? Click here to sign up!</a></p>
+                    </Container>
+
+                )}
+                {error && (
+                    <p className="text-danger">{error}</p>
+                )}
+            </Col>
+            <Col className="p-0 row-cols-1 position-relative d-none d-md-inline-flex" style={{color: "#FAF3E9", backgroundColor: "#FF7F50", borderRadius: "0 20px 20px 0"}}>
+                <Container className="" style={{ width: "100%"}}>
+                        <div className="position-absolute top-50 start-50 translate-middle" style={{color: "#FAF3E9"}}>
+                        <h3>Welcome To</h3>
+                        <h1>EzBook</h1>
+                    </div>
                     </Container>
             </Col>
         </Row>
