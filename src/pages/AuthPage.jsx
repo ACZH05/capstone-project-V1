@@ -21,7 +21,7 @@ export default function AuthPage() {
     const provider = new GoogleAuthProvider()
 
     useEffect(() => {
-        if (currentUser) navigate("/login")
+        if (currentUser) navigate("/")
     }, [currentUser, navigate])
 
     const handleGoogleLogin = async () => {
@@ -81,26 +81,29 @@ export default function AuthPage() {
         setError(null)
     }
   return (
-    <div style={{ backgroundColor: "#FAF3E9", height: "100dvh", overflow: "hidden"}}>
+    <div style={{ backgroundColor: "#FCFAFA", height: "100dvh", overflow: "hidden"}}>
         <Row className="flex-center" style={{ minWidth:"300px", height: "70%"}}>
             <Col className="p-0 d-inline-flex mt-3 mx-3">
                 {active ? (
                     <Container className="px-3 pt-4" style={{ width: "100%"}}>
-                        <div style={{ fontSize: 32, fontWeight: "bold", color: "#FF7F50"}}>Sign Up</div>
+                        <div style={{ fontSize: 32, fontWeight: "bold", color: "#531CB3"}}>Sign Up</div>
                         <Form onSubmit={handleSignUp}>
                             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
                             <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
-                            <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#FF7F50"}}>Sign Up</Button>
+                            <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#531CB3"}}>Sign Up</Button>
                             <p className="mt-3 text-center"><a href="" onClick={handleClickSignUp}>Got an account? Click here to sign in!</a></p>
                         </Form>
                     </Container>
                 ) : (
                     <Container className="px-3 pt-4">
-                        <div style={{ fontSize: 32, fontWeight: "bold", color: "#FF7F50"}}>Sign In</div>
+                        <div style={{ fontSize: 32, fontWeight: "bold", color: "#531CB3"}}>Sign In</div>
                         <Form onSubmit={handleSignIn}>
                             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)}  className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
                             <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
-                            <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#FF7F50"}}>Sign In</Button>
+                            {error && (
+                                <p className="text-danger mt-3">{error}</p>
+                            )}
+                            <Button type="submit" className="mt-4 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#531CB3"}}>Sign In</Button>
                             <hr />
                             <Button variant="outline-dark" className="rounded-pill" style={{ width: "100%"}} onClick={handleGoogleLogin}><i className="bi bi-google me-2"></i>continue with google</Button>
                         </Form>
@@ -108,13 +111,10 @@ export default function AuthPage() {
                     </Container>
 
                 )}
-                {error && (
-                    <p className="text-danger">{error}</p>
-                )}
             </Col>
-            <Col className="p-0 row-cols-1 position-relative d-none d-xl-inline-flex" style={{color: "#FAF3E9", backgroundColor: "#FF7F50", borderRadius: "0 20px 20px 0"}}>
+            <Col className="p-0 row-cols-1 position-relative d-none d-xl-inline-flex" style={{backgroundColor: "#531CB3", borderRadius: "0 20px 20px 0"}}>
                 <Container className="" style={{ width: "100%"}}>
-                        <div className="position-absolute top-50 start-50 translate-middle" style={{color: "#FAF3E9"}}>
+                        <div className="position-absolute top-50 start-50 translate-middle" style={{color: "#FCFAFA"}}>
                         <h3>Welcome To</h3>
                         <h1 className="text-center">EzBook</h1>
                     </div>
