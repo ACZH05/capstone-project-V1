@@ -9,14 +9,13 @@ import { useNavigate } from "react-router-dom";
 export default function AuthPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
     const [active, setActive] = useState(false)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
 
     const auth = getAuth()
     const { currentUser } = useContext(AuthContext)
-    const url = import.meta.env.VITE_BASE_URL
+    const url = "https://booking-api.alfred-chinchin.repl.co"
 
     const provider = new GoogleAuthProvider()
 
@@ -26,7 +25,10 @@ export default function AuthPage() {
 
     const handleGoogleLogin = async () => {
         try {
-            signInWithPopup(auth, provider)
+            const res = await signInWithPopup(auth, provider)
+            const id = res.user.uid
+            const email = res.user.email
+            await axios.post(`${url}/googlelogin`, {id, email})
         }
         catch (error) {
             console.log(error.code)
@@ -38,7 +40,7 @@ export default function AuthPage() {
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password)
             const id = res.user.uid
-            const apiRes = await axios.post(`${url}/user`, {id, phone_number: phoneNumber})
+            const apiRes = await axios.post(`${url}/signup`, {id, email})
             console.log(apiRes.data)
         }
         catch (error) {
@@ -61,6 +63,9 @@ export default function AuthPage() {
             else if (error.code === "auth/too-many-requests") {
                 setError("Sorry, you have exceeded the maximum number of allowed login attempts. For security purposes, please try again later.")
             }
+            else if (error.code === "auth/user-not-found") {
+                setError("User not found, please try another email.")
+            }
         }
     }
 
@@ -77,7 +82,6 @@ export default function AuthPage() {
         setActive(false)
         setEmail("")
         setPassword("")
-        setPhoneNumber("")
         setError(null)
     }
   return (
@@ -90,6 +94,9 @@ export default function AuthPage() {
                         <Form onSubmit={handleSignUp}>
                             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-5" style={{ width: "100%"}} placeholder="Enter Email" required />
                             <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-4" style={{ width: "100%"}} placeholder="Enter password" required />
+                            {error && (
+                                <p className="text-danger mt-3">{error}</p>
+                            )}
                             <Button type="submit" className="mt-5 border-0 sign-up-button rounded-pill" style={{ width: "100%", backgroundColor: "#531CB3"}}>Sign Up</Button>
                             <p className="mt-3 text-center"><a href="" onClick={handleClickSignUp}>Got an account? Click here to sign in!</a></p>
                         </Form>
