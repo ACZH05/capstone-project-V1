@@ -4,6 +4,10 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
 import SectionAuth from "./components/SectionAuth";
 import AuthPage from "./pages/AuthPage";
+import MainMenuPage from "./pages/MainMenuPage";
+import SetUpPage from "./pages/SetUpPage";
+import { RoleContext } from "./components/roleContext";
+import useLocalStorage from "use-local-storage";
 // import { Provider } from "react-redux";
 // import store from "./store";
 
@@ -33,18 +37,24 @@ function Layout() {
 }
 
 export default function App() {
+  const [roles, setRoles] = useLocalStorage("roles", false)
   return (
     // <Provider store={store}>
+    
       <div style={{ backgroundColor: "#FAF3E9",height: "100vh", overflow: "hidden"}}>
-        <AuthProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-              <Route path="/login" element={<AuthPage />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
+        <RoleContext.Provider value={{ roles, setRoles }}>
+          <AuthProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<MainMenuPage />} />
+                  <Route path="/login" element={<AuthPage />} />
+                  <Route path="/setup" element={<SetUpPage />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+        </RoleContext.Provider>
       </div>
     // </Provider>
   )
