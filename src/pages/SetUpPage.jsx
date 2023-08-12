@@ -4,6 +4,8 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { AuthContext } from "../components/AuthProvider";
 import { RoleContext } from "../components/roleContext";
 import { useNavigate } from "react-router-dom";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../firebase";
 
 export default function SetUpPage() {
   const [username, setUsername] = useState("")
@@ -19,6 +21,13 @@ export default function SetUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const img = e.target.value ? e.target.value  : 'default.jpg'
+    const imageRef = ref(storage, `profilePictures/${img}`)
+    getDownloadURL(imageRef)
+      .then((url) => {
+      console.log(url)
+      setProfilePic(url)
+    })
     try {
       const data = {
         username: username,
@@ -36,13 +45,6 @@ export default function SetUpPage() {
     }
   }
 
-  const handleProfilePic = (e) => {
-    if (e.target.value) {
-      setProfilePic(" ")
-    } else {
-      setProfilePic(e.target.value)
-    }
-  }
   return (
     <div style={{ height: "100dvh", overflow: "hidden"}}>
       <Row className="flex-center" style={{ minWidth:"300px", height: "70%"}}>
@@ -57,7 +59,7 @@ export default function SetUpPage() {
                     <Form.Control type="text" value={phoneNumber} style={{ width: "100%"}} placeholder="Exp: 0123456789" onChange={(e) => setPhoneNumber(e.target.value)} required />
 
                     <Form.Label className="mt-3">Profile Picture (Optional)</Form.Label>
-                    <Form.Control type="file" style={{ width: "100%"}} onChange={handleProfilePic} />
+                    <Form.Control type="file" style={{ width: "100%"}} onChange={(e) => setProfilePic(e.target.value)} />
 
                     <div className="inline-radio mt-3">
                         <div key={`inline-radio`} className="mb-3">
