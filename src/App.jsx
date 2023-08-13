@@ -8,25 +8,32 @@ import MainMenuPage from "./pages/MainMenuPage";
 import SetUpPage from "./pages/SetUpPage";
 import { RoleContext } from "./components/roleContext";
 import useLocalStorage from "use-local-storage";
+import { Provider } from "react-redux";
+import store from "./store";
 // import { Provider } from "react-redux";
 // import store from "./store";
 
-function Layout() {
+function Layout({ setRoles }) {
   const auth = getAuth()
   const navigate = useNavigate()
 
   const handleClick = () => {
     navigate('/booking')
   }
+
+  const logout = () => {
+    setRoles(false)
+    auth.signOut()
+  }
   return (
     <>
       <SectionAuth>
         <Navbar className="pt-4" style={{ background: "#FCFAFA"}}>
           <Container>
-            <Navbar.Brand href="/" style={{ color: "#531CB3", fontWeight: "bold" }}>BookMyHealth</Navbar.Brand>
+            <Navbar.Brand href="/" style={{ color: "#531CB3", fontWeight: "bold" }}>EzBook</Navbar.Brand>
               <Nav>
-                  <Nav.Link className="me-4" onClick={handleClick} style={{ color: "#531CB3", fontWeight: "500" }}>Check My Booking schedule</Nav.Link>
-                  <Button className="px-4 rounded-pill" style={{ background: "transparent", border: "2px solid #531CB3", color: "#531CB3", fontWeight: "500" }} onClick={() => auth.signOut()}>Logout</Button>
+                  <Nav.Link className="me-4" onClick={handleClick} style={{ color: "#531CB3", fontWeight: "500" }}>Check Appointment</Nav.Link>
+                  <Button className="px-4 rounded-pill" style={{ background: "transparent", border: "2px solid #531CB3", color: "#531CB3", fontWeight: "500" }} onClick={logout}>Logout</Button>
               </Nav>
           </Container>
         </Navbar>
@@ -39,14 +46,14 @@ function Layout() {
 export default function App() {
   const [roles, setRoles] = useLocalStorage("roles", false)
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
     
       <div style={{ backgroundColor: "#FCFAFA",height: "100vh", overflow: "hidden"}}>
         <RoleContext.Provider value={{ roles, setRoles }}>
           <AuthProvider>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Layout setRoles={setRoles} />}>
                   <Route index element={<MainMenuPage />} />
                   <Route path="/login" element={<AuthPage />} />
                   <Route path="/setup" element={<SetUpPage />} />
@@ -56,6 +63,6 @@ export default function App() {
           </AuthProvider>
         </RoleContext.Provider>
       </div>
-    // </Provider>
+    </Provider>
   )
 }
