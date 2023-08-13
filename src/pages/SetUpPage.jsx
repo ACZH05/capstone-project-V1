@@ -21,18 +21,17 @@ export default function SetUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const img = e.target.value ? e.target.value  : 'default.jpg'
-    const imageRef = ref(storage, `profilePictures/${img}`)
-    getDownloadURL(imageRef)
-      .then((url) => {
-      console.log(url)
-      setProfilePic(url)
-    })
     try {
+      let imageUrl = ""
+      const img = profilePic ? profilePic  : 'default.jpg'
+      const imageRef = ref(storage, `profilePictures/${img}`)
+      imageUrl = await getDownloadURL(imageRef)
+      console.log(imageUrl)
+      
       const data = {
         username: username,
         phonenumber: phoneNumber,
-        profilepic: profilePic,
+        profilepic: imageUrl,
         roles: role
       }
       await axios.put(`${BASE_URL}/users/${id}`, data)
