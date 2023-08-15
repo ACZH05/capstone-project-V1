@@ -38,6 +38,11 @@ export default function EditAppointmentModal({ show, handleClose, info }) {
         handleClose()
     }
 
+    const handleDelete = async () => {
+        await axios.delete(`${BASE_URL}/appointment/${id}`)
+        handleClose()
+    }
+
     return (
     <>
         <Modal show={show} onHide={handleClose} fullscreen>
@@ -84,7 +89,8 @@ export default function EditAppointmentModal({ show, handleClose, info }) {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" className="rounded-pill" onClick={handleClick} required>Create</Button>
+                <Button variant="danger" className="rounded" onClick={handleDelete}><i className="bi bi-trash"></i></Button>
+                <Button variant="primary" className="px-4 py-2 ms-3 rounded-pill" onClick={handleClick}>Edit</Button>
             </Modal.Footer>
         </Modal>
     </>

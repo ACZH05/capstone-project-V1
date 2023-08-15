@@ -8,7 +8,7 @@ export default function AppointmentCard({ info }) {
   const [show, setShow] = useState(false)
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false)
-  const { title, description, available_date: availableDate, available_time: availableTime, intervalpersession: duration, username, email, phonenumber: phoneNumber, profilepic: profilePic, id } = info
+  const { title, description, available_date: availableDate, available_time: availableTime, intervalpersession: duration, username, email, phonenumber: phoneNumber, profilepic: profilePic } = info
 
   const sortedDays = availableDate.sort((a, b) => a - b);
 
