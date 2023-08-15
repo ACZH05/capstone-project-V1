@@ -20,18 +20,18 @@ export default function YourAppointment() {
       .then((result) => {
         setInformation(result.data)
       })
-  }, [BASE_URL, id])
+  }, [BASE_URL, id, information])
 
   return (
     <div className="d-md-flex gap-5 justify-content-center">
       {information.map((info, index) => (
         <div key={index} className="mt-4">
-            <AppointmentCard title={info.title} description={info.description} availableDate={info.available_date} availableTime={info.available_time} duration={info.intervalpersession} username={info.username} email={info.email} phoneNumber={info.phonenumber} profilePic={info.profilepic} />
+            <AppointmentCard info={info} />
 
         </div>
       ))}
-        <div className="position-relative mt-4" style={{ width: "20rem", height: "19rem", border: "solid 1px black", cursor: "pointer"}} onClick={handleShow}>
-          <i className="bi bi-plus-lg position-absolute top-50 start-50 translate-middle fs-1 "></i>
+        <div className="position-relative mt-4" style={{ width: "20rem", height: "19rem", border: "solid 1px #531CB3", cursor: "pointer"}} onClick={handleShow}>
+          <i className="bi bi-plus-lg position-absolute top-50 start-50 translate-middle fs-1" style={{ color: "#531CB3"}}></i>
         </div>
         <AppointmentModal show={show} handleClose={handleClose} />
     </div>

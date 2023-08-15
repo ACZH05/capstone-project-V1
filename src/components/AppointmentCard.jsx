@@ -1,7 +1,14 @@
 import { Card, Container, Image } from "react-bootstrap";
+import '../style/AppointmentCard.css'
+import EditAppointmentModal from "./EditAppointmentModal";
+import { useState } from "react";
 
-export default function AppointmentCard({ title, description, availableDate, availableTime, duration, username, email, phoneNumber, profilePic }) {
+export default function AppointmentCard({ info }) {
   const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const [show, setShow] = useState(false)
+  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false)
+  const { title, description, available_date: availableDate, available_time: availableTime, intervalpersession: duration, username, email, phonenumber: phoneNumber, profilepic: profilePic, id } = info
 
   const sortedDays = availableDate.sort((a, b) => a - b);
 
@@ -27,10 +34,15 @@ export default function AppointmentCard({ title, description, availableDate, ava
       return `${dayNames[group[0]]} - ${dayNames[group[group.length - 1]]}`;
     }
   });
+
+  const handleClick = () => {
+    handleShow()
+  }
+
   return (
     <>
-      <Card style={{ width: "20rem", backgroundColor: "#FEFEFE", border: "1.5px solid black"}}>
-        <Container className="mt-3">
+      <Card onClick={handleClick} style={{ width: "20rem", backgroundColor: "#FEFEFE", border: "1.5px solid #531CB3", cursor: "pointer"}}>
+        <Container id="card" className="pt-3">
           <Card.Title>{title} - {duration} minutes meeting</Card.Title>
           <Card.Text>{description}</Card.Text>
           <Card.Text>{convertedGroups.join(', ')}</Card.Text>
@@ -45,6 +57,7 @@ export default function AppointmentCard({ title, description, availableDate, ava
             </div>
           </div>
         </Container>
+        <EditAppointmentModal show={show} handleClose={handleClose} info={info} />
       </Card>
     </>
   )

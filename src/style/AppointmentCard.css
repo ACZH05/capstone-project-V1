@@ -1,0 +1,5 @@
+#card:hover {
+    background-color: #531CB3;
+    color: white;
+    transition: all 100ms linear;
+}
