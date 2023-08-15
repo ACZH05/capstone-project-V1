@@ -48,7 +48,7 @@ export default function App() {
   return (
     <Provider store={store}>
     
-      <div style={{ backgroundColor: "#FCFAFA",height: "100vh", overflow: "hidden"}}>
+      <div style={{ backgroundColor: "#FCFAFA",height: "100vh"}}>
         <RoleContext.Provider value={{ roles, setRoles }}>
           <AuthProvider>
             <BrowserRouter>

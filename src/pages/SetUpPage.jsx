@@ -16,7 +16,7 @@ export default function SetUpPage() {
   const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
   const { currentUser } = useContext(AuthContext)
   const { setRoles } = useContext(RoleContext)
-  const id = currentUser.uid
+  const id = currentUser?.uid
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
