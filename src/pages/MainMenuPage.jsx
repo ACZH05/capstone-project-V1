@@ -17,18 +17,21 @@ export default function MainMenuPage() {
 
     useEffect(() => {
         setRoles(false)
-        if (!currentUser) navigate('/login')
-        axios.get(`${url}/roles/${id}`)
-            .then(response => {
-                const data = response.data
-                if (!data[0]?.roles) {
-                    setRoles(false)
-                    navigate('/setup')
-                } else {
-                    setRole(data[0].roles)
-                    setRoles(true)
-                }
-            })
+        if (!currentUser) {
+            navigate('/login')
+        } else {
+            axios.get(`${url}/roles/${id}`)
+                .then(response => {
+                    const data = response.data
+                    if (!data[0]?.roles) {
+                        setRoles(false)
+                        navigate('/setup')
+                    } else {
+                        setRole(data[0].roles)
+                        setRoles(true)
+                    }
+                })
+        }
     }, [id, navigate, setRoles, currentUser])
     return (
     <div>
