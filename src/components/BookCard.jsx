@@ -1,8 +1,13 @@
 import { Card, Container, Image } from "react-bootstrap";
 import '../style/AppointmentCard.css'
+import BookingModal from "./BookingModal";
+import { useState } from "react";
 
-export default function BookCard({ info, handleShow }) {
+export default function BookCard({ info }) {
   const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const [show, setShow] = useState(false)
+  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false)
 
   const { title, description, available_date: availableDate, available_time: availableTime, intervalpersession: duration, username, email, phonenumber: phoneNumber, profilepic: profilePic } = info
 
@@ -53,8 +58,8 @@ export default function BookCard({ info, handleShow }) {
             </div>
           </div>
         </Container>
-        
       </Card>
+      <BookingModal show={show} handleClose={handleClose} info={info} />
     </>
   )
 }

@@ -10,6 +10,7 @@ import { RoleContext } from "./components/roleContext";
 import useLocalStorage from "use-local-storage";
 import { Provider } from "react-redux";
 import store from "./store";
+import { TokenContext } from "./components/TokenContext";
 // import { Provider } from "react-redux";
 // import store from "./store";
 
@@ -45,23 +46,26 @@ function Layout({ setRoles }) {
 
 export default function App() {
   const [roles, setRoles] = useLocalStorage("roles", false)
+  const [token, setToken] = useLocalStorage("token", null)
   return (
     <Provider store={store}>
     
       <div style={{ backgroundColor: "#FCFAFA",height: "100vh"}}>
-        <RoleContext.Provider value={{ roles, setRoles }}>
-          <AuthProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Layout setRoles={setRoles} />}>
-                  <Route index element={<MainMenuPage />} />
-                  <Route path="/login" element={<AuthPage />} />
-                  <Route path="/setup" element={<SetUpPage />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </AuthProvider>
-        </RoleContext.Provider>
+        <TokenContext.Provider value={{ token, setToken }}>
+          <RoleContext.Provider value={{ roles, setRoles }}>
+            <AuthProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Layout setRoles={setRoles} />}>
+                    <Route index element={<MainMenuPage />} />
+                    <Route path="/login" element={<AuthPage />} />
+                    <Route path="/setup" element={<SetUpPage />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </AuthProvider>
+          </RoleContext.Provider>
+        </TokenContext.Provider>
       </div>
     </Provider>
   )

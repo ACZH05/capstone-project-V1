@@ -57,8 +57,8 @@ export default function AppointmentCard({ info }) {
             </div>
           </div>
         </Container>
-        <EditAppointmentModal show={show} handleClose={handleClose} info={info} />
       </Card>
+        <EditAppointmentModal show={show} handleClose={handleClose} info={info} />
     </>
   )
 }

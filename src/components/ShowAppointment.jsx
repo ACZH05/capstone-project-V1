@@ -3,15 +3,12 @@ import axios from "axios";
 import { AuthContext } from "./AuthProvider";
 import { Spinner } from "react-bootstrap";
 import BookCard from "./BookCard";
-import BookingModal from "./BookingModal";
 
 export default function ShowAppointment() {
   const [information, setInformation] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const [show, setShow] = useState(false)
-  const handleShow = () => setShow(true)
-  const handleClose = () => setShow(false)
+
   
   const { currentUser } = useContext(AuthContext)
   const id = currentUser?.uid
@@ -19,7 +16,7 @@ export default function ShowAppointment() {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`${BASE_URL}/appointment/${id}`)
+    axios.get(`${BASE_URL}/appointment`)
       .then((result) => {
         setInformation(result.data)
       })
@@ -33,8 +30,7 @@ export default function ShowAppointment() {
         <>
         {information.map((info, index) => (
           <div key={index} className="mt-4">
-              <BookCard info={info} show={show} handleClose={handleClose} handleShow={handleShow} />
-              <BookingModal show={show} handleClose={handleClose} info={info} />
+              <BookCard info={info} />
           </div>
         ))}
         </>

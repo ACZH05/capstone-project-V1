@@ -1,19 +1,22 @@
 import { useContext, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css';
 import { AuthContext } from "./AuthProvider";
 import axios from "axios";
+import DateTimePicker from "react-datetime-picker";
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
+import { TokenContext } from "./TokenContext";
 
 
 export default function BookingModal({ show, handleClose, info }) {
-    const { id: sessionId, available_date: availableDate } = info
+    const { title, description, id: sessionId, available_date: availableDate, intervalpersession: duration, email } = info
     const { currentUser } = useContext(AuthContext)
+    const { token } = useContext(TokenContext)
     const id = currentUser?.uid
     const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
 
-    const [bookingdDate, setBookingDate] = useState("")
-    const [time, setTime] = useState("")
+    const [bookingdDateTime, setBookingDateTime] = useState("")
 // Monday to Friday
 
     const isDayDisabled = (date) => {
@@ -26,15 +29,47 @@ export default function BookingModal({ show, handleClose, info }) {
     };
 
     const handleSubmit = async () => {
+        const baseDate = new Date(bookingdDateTime.toISOString());
+        const newDate = new Date(baseDate.getTime() + duration * 60000);
+
         const data = {
             userId: id,
             sessionId,
-            bookedDate: new Date(bookingdDate).toISOString().split('T')[0],
-            bookedTime: time
+            bookedDateTime: bookingdDateTime.toISOString(),
         }
+
+        const event = {
+            'conferenceDataVersion': 0,
+            'summary': title,
+            'description': description,
+            'start': {
+                'dateTime': bookingdDateTime.toISOString(),
+                'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            'end': {
+                'dateTime': newDate.toISOString(),
+                'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            'attendees': [
+                { 'email': email},
+                { "email": currentUser.email}
+            ]
+        }
+
+        await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+            method: "POST",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(event)
+        }).then((data) => {
+            return data.json()
+        }).then((data) => {
+            console.log(data)
+        })
+
         await axios.post(`${BASE_URL}/booking`, data)
-        setBookingDate("")
-        setTime("")
+        setBookingDateTime("")
         handleClose()
     }
 
@@ -45,12 +80,12 @@ export default function BookingModal({ show, handleClose, info }) {
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Label>Select a time and date</Form.Label>
-                    <Calendar
-                        value={bookingdDate}
-                        onChange={(e) => setBookingDate(e)}
+                    <DateTimePicker
+                        value={bookingdDateTime}
+                        onChange={(e) => setBookingDateTime(e)}
                         tileDisabled={({ date }) => isDayDisabled(date)}
+                        className="ms-3"
                     />
-                    <Form.Control type="time" className="mt-4" value={time} onChange={(e) => setTime(e.target.value)} style={{ width: "22rem"}} required />
                 </Form>
             </Modal.Body>
             <Modal.Footer>

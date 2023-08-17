@@ -5,6 +5,7 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWith
 import { AuthContext } from "../components/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../components/TokenContext";
 
 export default function AuthPage() {
     const [email, setEmail] = useState("")
@@ -15,9 +16,11 @@ export default function AuthPage() {
 
     const auth = getAuth()
     const { currentUser } = useContext(AuthContext)
+    const { setToken } = useContext(TokenContext)
     const url = "https://booking-api.alfred-chinchin.repl.co"
 
     const provider = new GoogleAuthProvider()
+    provider.addScope('https://www.googleapis.com/auth/calendar')
 
     useEffect(() => {
         if (currentUser) navigate("/")
@@ -26,6 +29,8 @@ export default function AuthPage() {
     const handleGoogleLogin = async () => {
         try {
             const res = await signInWithPopup(auth, provider)
+            const credential = GoogleAuthProvider.credentialFromResult(res)
+            setToken(credential.accessToken)
             const id = res.user.uid
             const email = res.user.email
             await axios.post(`${url}/googlelogin`, {id, email})

@@ -40,11 +40,7 @@ export default function MainMenuPage() {
                 <Spinner  animation="border" />
             </div>
             ) : (
-                role === "educator" ? (
-                    <Profile />
-                ) : (
-                    <div>student</div>
-                )
+                <Profile />
         )}
     </div>
     )
