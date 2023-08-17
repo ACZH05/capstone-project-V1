@@ -11,6 +11,7 @@ import useLocalStorage from "use-local-storage";
 import { Provider } from "react-redux";
 import store from "./store";
 import { TokenContext } from "./components/TokenContext";
+import CheckAppointment from "./pages/CheckAppointment";
 // import { Provider } from "react-redux";
 // import store from "./store";
 
@@ -19,7 +20,7 @@ function Layout({ setRoles }) {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/booking')
+    navigate('/check')
   }
 
   const logout = () => {
@@ -63,6 +64,7 @@ export default function App() {
                     <Route index element={<MainMenuPage />} />
                     <Route path="/login" element={<AuthPage />} />
                     <Route path="/setup" element={<SetUpPage />} />
+                    <Route path="/check" element={<CheckAppointment />} />
                   </Route>
                 </Routes>
               </BrowserRouter>
