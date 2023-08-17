@@ -6,14 +6,13 @@ import SectionAuth from "./components/SectionAuth";
 import AuthPage from "./pages/AuthPage";
 import MainMenuPage from "./pages/MainMenuPage";
 import SetUpPage from "./pages/SetUpPage";
-import RoleContext from "./components/roleContext";
 import useLocalStorage from "use-local-storage";
 import { Provider } from "react-redux";
 import store from "./store";
 import { TokenContext } from "./components/TokenContext";
 import CheckAppointment from "./pages/CheckAppointment";
-// import { Provider } from "react-redux";
-// import store from "./store";
+import { RolesContext } from "./components/RolesContext";
+
 
 function Layout({ setRoles }) {
   const auth = getAuth()
@@ -56,7 +55,7 @@ export default function App() {
     
       <div style={{ backgroundColor: "#FCFAFA",height: "100vh"}}>
         <TokenContext.Provider value={{ token, setToken }}>
-          <RoleContext.Provider value={{ roles, setRoles }}>
+          <RolesContext.Provider value={{ roles, setRoles}}>
             <AuthProvider>
               <BrowserRouter>
                 <Routes>
@@ -69,7 +68,7 @@ export default function App() {
                 </Routes>
               </BrowserRouter>
             </AuthProvider>
-          </RoleContext.Provider>
+          </RolesContext.Provider>
         </TokenContext.Provider>
       </div>
     </Provider>

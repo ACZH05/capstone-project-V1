@@ -4,12 +4,13 @@ import axios from "axios"
 
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { RoleContext } from "../components/roleContext";
+
 import Profile from "../components/Profile";
+import { RolesContext } from "../components/RolesContext";
 
 export default function MainMenuPage() {
     const { currentUser } = useContext(AuthContext)
-    const { roles, setRoles } = useContext(RoleContext)
+    const { roles, setRoles } = useContext(RolesContext)
     const id = currentUser?.uid
     const url = import.meta.env.VITE_BASE_URL
     const navigate = useNavigate()

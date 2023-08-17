@@ -2,10 +2,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { AuthContext } from "../components/AuthProvider";
-import { RoleContext } from "../components/roleContext";
+
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase";
+import { RolesContext } from "../components/RolesContext";
 
 export default function SetUpPage() {
   const [username, setUsername] = useState("")
@@ -15,7 +16,7 @@ export default function SetUpPage() {
 
   const BASE_URL = import.meta.env.VITE_BASE_URL
   const { currentUser } = useContext(AuthContext)
-  const { setRoles } = useContext(RoleContext)
+  const { setRoles } = useContext(RolesContext)
   const id = currentUser?.uid
   const navigate = useNavigate()
 
