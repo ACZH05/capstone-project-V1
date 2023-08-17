@@ -1,6 +1,6 @@
 import { BrowserRouter, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthProvider } from "./components/AuthProvider";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
 import SectionAuth from "./components/SectionAuth";
 import AuthPage from "./pages/AuthPage";
@@ -29,13 +29,16 @@ function Layout({ setRoles }) {
   return (
     <>
       <SectionAuth>
-        <Navbar className="pt-4" style={{ background: "#FCFAFA"}}>
+        <Navbar expand="md" className="pt-4" style={{ background: "#FCFAFA"}}>
           <Container>
             <Navbar.Brand href="/" style={{ color: "#531CB3", fontWeight: "bold" }}>EzBook</Navbar.Brand>
-              <Nav>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
                   <Nav.Link className="me-4" onClick={handleClick} style={{ color: "#531CB3", fontWeight: "500" }}>Check Appointment</Nav.Link>
-                  <Button className="px-4 rounded-pill" style={{ background: "transparent", border: "2px solid #531CB3", color: "#531CB3", fontWeight: "500" }} onClick={logout}>Logout</Button>
+                  <Nav.Link className="rounded-pill" style={{ color: "#531CB3", fontWeight: "500" }} onClick={logout}>Logout</Nav.Link>
               </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       </SectionAuth>
