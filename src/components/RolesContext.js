@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const RolesContext = createContext
+export const RolesContext = createContext()
