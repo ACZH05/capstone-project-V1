@@ -15,14 +15,14 @@ export default function Profile() {
     const handleClose = () => setShow(false)
 
     const id = currentUser.uid
-    const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
     useEffect(() => {
         axios.get(`${BASE_URL}/users/${id}`)
             .then((result) => {
                 setInformation(result.data[0])
             })
-        }, [id, information])
+        }, [id, information, BASE_URL])
   return (
     <Container>
         <div className="d-flex flex-column flex-md-row justify-content-center align-items-center">

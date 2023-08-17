@@ -6,7 +6,7 @@ import BookedCard from "../components/BookedCard"
 export default function CheckAppointment() {
     const { currentUser } = useContext(AuthContext)
     const id = currentUser?.uid
-    const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
     const [information, setInformation] = useState([])
 
@@ -15,7 +15,7 @@ export default function CheckAppointment() {
             .then((result) => {
                 setInformation(result.data)
             })
-    }, [id, information])
+    }, [id, information, BASE_URL])
   return (
     <div className="d-md-flex gap-5 justify-content-center">
         <>

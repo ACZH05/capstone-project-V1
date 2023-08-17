@@ -12,7 +12,7 @@ export default function ShowAppointment() {
   
   const { currentUser } = useContext(AuthContext)
   const id = currentUser?.uid
-  const BASE_URL = `https://booking-api.alfred-chinchin.repl.co`
+  const BASE_URL = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
     setLoading(true)

@@ -17,7 +17,7 @@ export default function AuthPage() {
     const auth = getAuth()
     const { currentUser } = useContext(AuthContext)
     const { setToken } = useContext(TokenContext)
-    const url = "https://booking-api.alfred-chinchin.repl.co"
+    const url = import.meta.env.VITE_BASE_URL
 
     const provider = new GoogleAuthProvider()
     provider.addScope('https://www.googleapis.com/auth/calendar')

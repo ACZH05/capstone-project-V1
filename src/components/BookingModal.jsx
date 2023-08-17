@@ -14,7 +14,7 @@ export default function BookingModal({ show, handleClose, info }) {
     const { currentUser } = useContext(AuthContext)
     const { token } = useContext(TokenContext)
     const id = currentUser?.uid
-    const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
     const [bookingdDateTime, setBookingDateTime] = useState("")
 // Monday to Friday

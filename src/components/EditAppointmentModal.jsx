@@ -14,7 +14,7 @@ export default function EditAppointmentModal({ show, handleClose, info }) {
     const [newEndTime, setNewEndTime] = useState(availableTime[1])
     const [newDuration, setNewDuration] = useState(duration)
 
-    const BASE_URL = `https://booking-api.alfred-chinchin.repl.co`
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
     const handleChange = (index) => {
         if (newDate.includes(index)) {

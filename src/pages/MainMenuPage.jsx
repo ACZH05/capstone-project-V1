@@ -11,7 +11,7 @@ export default function MainMenuPage() {
     const { currentUser } = useContext(AuthContext)
     const { roles, setRoles } = useContext(RoleContext)
     const id = currentUser?.uid
-    const url = "https://booking-api.alfred-chinchin.repl.co"
+    const url = import.meta.env.VITE_BASE_URL
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function MainMenuPage() {
                     }
                 })
         }
-    }, [id, navigate, setRoles, currentUser])
+    }, [id, navigate, setRoles, currentUser, url])
     return (
     <div>
         {!roles ? (

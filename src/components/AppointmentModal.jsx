@@ -13,7 +13,7 @@ export default function AppointmentModal({ show, handleClose }) {
     const [duration, setDuration] = useState(30)
 
     const { currentUser } = useContext(AuthContext)
-    const BASE_URL = `https://booking-api.alfred-chinchin.repl.co`
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
     const handleChange = (e) => {
         const { value, checked } = e.target

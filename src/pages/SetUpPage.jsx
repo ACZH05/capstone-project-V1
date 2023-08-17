@@ -13,7 +13,7 @@ export default function SetUpPage() {
   const [profilePic, setProfilePic] = useState(null)
   const [role, setRole] = useState("")
 
-  const BASE_URL = 'https://booking-api.alfred-chinchin.repl.co'
+  const BASE_URL = import.meta.env.VITE_BASE_URL
   const { currentUser } = useContext(AuthContext)
   const { setRoles } = useContext(RoleContext)
   const id = currentUser?.uid
