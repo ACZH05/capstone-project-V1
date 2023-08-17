@@ -6,7 +6,7 @@ import SectionAuth from "./components/SectionAuth";
 import AuthPage from "./pages/AuthPage";
 import MainMenuPage from "./pages/MainMenuPage";
 import SetUpPage from "./pages/SetUpPage";
-import { RoleContext } from "./components/roleContext";
+import RoleContext from "./components/roleContext";
 import useLocalStorage from "use-local-storage";
 import { Provider } from "react-redux";
 import store from "./store";
