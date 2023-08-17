@@ -58,7 +58,7 @@ export default function SetUpPage() {
                     <Form.Control type="text" value={phoneNumber} style={{ width: "100%"}} placeholder="Exp: 0123456789" onChange={(e) => setPhoneNumber(e.target.value)} required />
 
                     <Form.Label className="mt-3">Profile Picture (Optional)</Form.Label>
-                    <Form.Control type="file" style={{ width: "100%"}} onChange={(e) => setProfilePic(e.target.value)} />
+                    <Form.Control type="file" style={{ width: "100%"}} onChange={(e) => setProfilePic(e.target.files[0])} />
 
                     <div className="inline-radio mt-3">
                         <div key={`inline-radio`} className="mb-3">

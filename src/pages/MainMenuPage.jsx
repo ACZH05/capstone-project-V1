@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../components/AuthProvider"
 import axios from "axios"
 
@@ -10,7 +10,6 @@ import Profile from "../components/Profile";
 export default function MainMenuPage() {
     const { currentUser } = useContext(AuthContext)
     const { roles, setRoles } = useContext(RoleContext)
-    const [role, setRole] = useState("")
     const id = currentUser?.uid
     const url = "https://booking-api.alfred-chinchin.repl.co"
     const navigate = useNavigate()
@@ -27,7 +26,6 @@ export default function MainMenuPage() {
                         setRoles(false)
                         navigate('/setup')
                     } else {
-                        setRole(data[0].roles)
                         setRoles(true)
                     }
                 })
